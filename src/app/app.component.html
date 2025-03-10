@@ -1,0 +1,52 @@
+<div class="wrapper">
+  <div class="weather-controls">
+    <form [formGroup]="weatherForm">
+      <mat-form-field class="example-full-width">
+        <mat-label>City</mat-label>
+        <input
+          formControlName="city"
+          matInput
+          placeholder="Ex. London"
+          [errorStateMatcher]="matcher"
+        />
+        @if (weatherForm.controls['city'].touched &&
+        weatherForm.controls['city'].hasError('minlength')) {
+        <mat-error>Please enter a valid city name</mat-error>
+        } @if (weatherForm.controls['city'].hasError('required')) {
+        <mat-error>City name is required</mat-error>
+        }
+      </mat-form-field>
+    </form>
+
+    <button
+      class="action-btn"
+      mat-flat-button
+      (click)="showWeather()"
+      [disabled]="
+        weatherForm.controls['city'].invalid ||
+        weatherForm.controls['city'].value.trim() === ''
+      "
+    >
+      Get weather
+    </button>
+  </div>
+
+  @if (weatherObs$ | async) {
+  <div class="data-result">
+    <p>Description: {{ (weatherObs$ | async)!.weather[0].main }}</p>
+    <p>
+      Temperature: {{ (weatherObs$ | async)!.main.temp | round : "round" }} °C
+    </p>
+    <p>
+      Min Temperature:
+      {{ (weatherObs$ | async)!.main.temp_min | round : "floor" }} °C
+    </p>
+    <p>
+      Max Temperature:
+      {{ (weatherObs$ | async)!.main.temp_max | round : "ceil" }} °C
+    </p>
+  </div>
+  } @if (error) {
+  <div class="error">Error: {{ error }}</div>
+  }
+</div>

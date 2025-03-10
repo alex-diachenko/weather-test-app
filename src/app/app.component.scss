@@ -1,0 +1,27 @@
+.wrapper {
+    max-width: 1100px;
+    margin: auto;
+    padding-top: 25px;
+}
+
+.weather-controls {
+    display: flex;
+    justify-content: center;
+
+    form, .action-btn {
+        margin: 0 10px;
+    }
+
+    .action-btn {
+        margin-top: 10px;
+    }
+}
+
+.data-result {
+    text-align: center;
+}
+
+.error {
+    text-align: center;
+    color: red;
+}
